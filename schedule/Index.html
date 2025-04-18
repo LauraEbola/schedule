@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录页面</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+    <!-- 容器用于居中表单 -->
+    <div class="container">
+        <div class="form-box" id="loginFormContainer">
+            <h2>登录</h2>
+            <form id="loginForm">
+                <input type="text" id="loginUsername" placeholder="用户名" required>
+                <input type="password" id="loginPassword" placeholder="密码" required>
+                <button type="submit" id="loginButton">登录</button>
+            </form>
+            <p>不想使用账号？<a href="#" id="emailLogin">使用邮箱登录</a></p>
+            <p>不想注册账户？<a href="#" id="guestAccess">作为游客访问</a></p>
+            <p>还没有账户？<a href="#" id="showRegister">注册</a></p>
+        </div>
+
+        <div class="form-box" id="registerFormContainer" style="display: none;">
+            <h2>注册</h2>
+            <form id="registerForm">
+                <input type="text" id="regiName" placeholder="用户名" required>
+                <input type="password" id="regiPw" placeholder="密码" required>
+                <input type="text" id="regiNick" placeholder="昵称" required>
+                <input type="email" id="regiEmail" placeholder="邮箱（可选）">
+                <button type="submit" id="regiButton">注册</button>
+            </form>
+            <p>已经有账户了？<a href="#" id="showLogin">登录</a></p>
+        </div>
+
+        <div class="form-box" id="emailLoginFormContainer" style="display: none;">
+            <h2>邮箱登录</h2>
+            <form id="emailLoginForm">
+                <input type="email" id="emailAddress" placeholder="请输入邮箱" required>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="emailCode" placeholder="请输入验证码" required style="flex: 1;">
+                    <button type="button" id="sendCodeBtn" style="width: auto;">发送验证码</button>
+                </div>
+                <button type="submit">登录</button>
+            </form>
+            <p><a href="#" id="emailBackToLogin">返回登录</a></p>
+        </div>
+
+    </div>
+
+    <script src="js/index.js"></script>
+    
+    <!--邮箱验证码模块-->
+    <script src="js/email.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+        (function () {
+            emailjs.init({
+                publicKey: "YOUR_PUBLIC_KEY",
+            });
+        })();
+    </script>
+</body>
+</html>
