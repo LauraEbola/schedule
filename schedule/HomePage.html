@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+    <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+	<!--布局按钮-->
+	<div class="container">
+		<header class="header">
+			<div class="nav">
+				<button onclick="location.href='HomePage.html'">首页</button>
+				<button onclick="location.href='schedule.html'">个人日程</button>
+				<button onclick="location.href='course.html'">课程安排</button>
+			</div>
+			<div class="user-info">
+				<span id="user-nickname">欢迎━(*｀∀´*)ノ亻!</span> |
+				<span id="user-level">可可爱爱！</span> |
+				<button onclick="logout()">退出系统</button>
+			</div>
+		</header>
+			
+		<!-- 整体居中的容器 -->
+		<div class="content">
+			<div class="info-box">
+				<!-- 左侧名言和时间 -->
+				<div class="left-section">
+					<p class="quote-text">“知之者不如好之者，好之者不如乐之者。”</p>
+					<p class="author">—— 孔子</p>
+					<p class="time" id="current-time"></p>
+					<p class="emoticon"> (´｡• ᵕ •｡`) </p> <!-- 可爱的颜文字 -->
+				</div>
+    
+				<!-- 右侧古诗展示 -->
+				<div class="right-section">
+					<h2 class="poem-title">古诗</h2>
+					<h3 class="poem-name">《春夜喜雨》</h3>
+					<p class="poet-name">——杜甫</p>
+					<p class="poem-content">
+					<p>好雨知时节，当春乃发生。</p>
+					<p>随风潜入夜，润物细无声。</p>
+					<p>野径云俱黑，江船火独明。</p>
+					<p>晓看红湿处，花重锦官城。</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <script src="js/home.js"></script>
+	<script src="js/logout.js"></script>
+</body>
+</html>

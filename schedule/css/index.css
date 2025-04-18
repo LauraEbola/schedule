@@ -1,0 +1,120 @@
+/* 全屏背景图片 */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('../img/cloudy-sky-from-above.jpg'); /* 背景图片路径 */
+    background-size: cover; /* 确保图片覆盖整个背景 */
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 容器设置，居中对齐 */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    max-width: 1200px;
+    background-color: rgba(255, 255, 255, 0.8); /* 半透明背景 */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 10px 5px 5px rgba(255, 85, 0, 0.1);
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* 注册/登录表单切换链接 */
+#showRegister,
+#showLogin {
+    cursor: pointer;
+    font-weight: bold;
+    color: #2196F3;
+}
+
+#showRegister:hover,
+#showLogin:hover {
+    text-decoration: underline;
+}
+
+/* 游客访问按钮 */
+#guestAccess {
+    color: #2196F3;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#guestAccess:hover {
+    text-decoration: underline;
+}
+
+/* 邮箱登录按钮 */
+#emailLogin {
+    color: #2196F3;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+    #emailLogin:hover {
+        text-decoration: underline;
+    }
+
+    /*发生验证码按钮样式*/
+#sendCodeBtn {
+    width: auto;
+    background-color: #2196F3;
+    height: 40px; /* 高度，比如 40px，也可以只用 padding 来调节 */
+    font-size: 14px; /* 字体大小 */
+    padding: 8px 12px; /* 内边距：垂直8px，水平12px */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    #sendCodeBtn:hover {
+        background-color: #1976D2;
+    }

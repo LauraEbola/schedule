@@ -1,0 +1,154 @@
+body {
+    background-image: url('../img/clouds-4215608.jpg'); /* 背景图片路径 */
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+.containerFir {
+    display: flex;
+    flex-direction: column; /* 垂直布局 */
+    justify-content: flex-start; /* 向上对齐 */
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between; /* 左右对齐 */
+    align-items: center; /* 确保按钮和用户信息在一条线上 */
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* 半透明白色背景 */
+}
+
+.nav button {
+    margin-right: 10px;
+    padding: 5px 15px;
+    font-size: 1em;
+}
+
+    .nav button:hover {
+        background-color: #777;
+    }
+
+.user-info {
+    font-size: 1.1em;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/*项目显示样式*/
+.schedule-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.schedule-item {
+    background: #e7f3ff;
+    border: 1px solid #9dc6e0;
+    border-radius: 5px;
+    padding: 10px;
+    position: relative;
+}
+
+    .schedule-item input[type="checkbox"] {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+    }
+
+.schedule-form h3,
+.schedule-delete h3 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+
+.schedule-item h4 {
+    margin-left: 25px;
+}
+
+.schedule-item p {
+    margin-left: 25px;
+    margin: 5px 0;
+}
+
+/*分页按钮样式*/
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+    .pagination button {
+        margin: 0 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+
+/* 通用输入框样式 */
+.schedule-form input[type="text"],
+.schedule-form input[type="date"],
+.schedule-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin: 6px 0;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+    .schedule-form input:focus,
+    .schedule-form textarea:focus {
+        outline: none;
+        border-color: #4a90e2;
+    }
+
+/* 通用按钮样式 */
+.schedule-form button,
+.schedule-delete button {
+    padding: 10px 16px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+    .schedule-form button:hover,
+    .schedule-delete button:hover {
+        background-color: #357ab8;
+    }
+
+/* 删除按钮可以稍微区分颜色 */
+.schedule-delete button {
+    background-color: #e74c3c;
+}
+
+    .schedule-delete button:hover {
+        background-color: #c0392b;
+    }
+
+.button-center {
+    text-align: center;
+    margin-top: 10px;
+}
+
+    .button-center button {
+        display: inline-block;
+    }

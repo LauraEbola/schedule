@@ -1,0 +1,105 @@
+body {
+    background-image: url('../img/clouds-4215608.jpg'); /* 背景图片路径 */
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+.container {
+    display: flex;
+    flex-direction: column; /* 垂直布局 */
+    justify-content: flex-start; /* 向上对齐 */
+    width: 100%;
+    height: 100%; /* 使高度填满 */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between; /* 左右对齐 */
+    align-items: center; /* 确保按钮和用户信息在一条线上 */
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* 半透明白色背景 */
+}
+
+.nav button {
+    margin-right: 10px;
+    padding: 5px 15px;
+    font-size: 1em;
+}
+
+.user-info {
+    font-size: 1.1em;
+}
+
+
+/* 容器设置，居中对齐 */
+.content {
+    flex-grow: 1; /* 使内容区域自适应剩余空间 */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 内容垂直居中 */
+}
+
+.info-box {
+    display: flex;
+    justify-content: space-between; /* 左右对齐 */
+    width: 45%; /* 控制方框宽度 */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9); /* 半透明白色背景 */
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+}
+
+.left-section {
+    display: flex;
+    flex-direction: column; /* 垂直排列 */
+    justify-content: center; /* 垂直居中 */
+    text-align: left; /* 名言和时间左对齐 */
+	width: 45%;
+}
+
+.quote {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.time {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.emoticon {
+    font-size: 2em; /* 调整颜文字大小 */
+    margin-top: 10px; /* 增加上方间距 */
+    text-align: center; /* 颜文字居中 */
+}
+
+.right-section {
+    text-align: center; /* 内容居中 */
+	width: 45%;
+}
+
+.poem-title {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
+
+.poem-name {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.poet-name {
+    font-size: 1.2em;
+    text-align: right; /* 诗人名字居右 */
+    margin-bottom: 10px;
+}
+
+.poem-content {
+    font-size: 1.2em;
+    line-height: 1.6;
+    text-align: center; /* 诗内容居中 */
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/schedule.css">
+    <title>个人日程</title>
+</head>
+<body>
+	<div class="containerFir">
+    <header class="header">
+        <div class="nav">
+            <button onclick="location.href='HomePage.html'">首页</button>
+            <button onclick="location.href='schedule.html'">个人日程</button>
+            <button onclick="location.href='course.html'">课程安排</button>
+        </div>
+        <div class="user-info">
+	        <span id="user-nickname">欢迎━(*｀∀´*)ノ亻!</span> |
+	        <span id="user-level">可可爱爱！</span> |
+	        <button onclick="logout()">退出系统</button>
+        </div>
+    </header>
+	</div>
+
+    <main>
+        <div class="container">
+            <h2>个人日程</h2>
+
+            <div class="schedule-form admin-functions">
+                <h3>添加日程</h3>
+                <input type="text" id="schedule-name" placeholder="日程名称">
+                <textarea id="schedule-content" placeholder="日程内容"></textarea>
+                <input type="date" id="schedule-deadline" placeholder="截止时间（可选）">
+                <!-- 添加日程按钮 -->
+                <div class="button-center">
+	                <button onclick="addSchedule()">添加</button>
+                </div>
+            </div>
+
+            <div class="schedule-delete admin-functions">
+                <h3>删除日程</h3>
+                <!-- 删除选中按钮 -->
+                <div class="button-center">
+	                <button onclick="deleteSelectedSchedules()">删除选中</button>
+                </div>
+            </div>
+
+            <div id="schedule-list" class="schedule-list"></div>
+            <!--分页按钮-->
+            <div id="schedule-pagination" class="pagination"></div>
+
+        </div>
+    </main>
+
+    <script src="js/schedule.js"></script>
+	<script src="js/logout.js"></script>
+</body>
+</html>

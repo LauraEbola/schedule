@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/course.css">
+    <title>课程安排</title>
+</head>
+<body>
+    <div class="containerFir">
+        <header class="header">
+            <div class="nav">
+                <button onclick="location.href='HomePage.html'">首页</button>
+                <button onclick="location.href='schedule.html'">个人日程</button>
+                <button onclick="location.href='course.html'">课程安排</button>
+            </div>
+            <div class="user-info">
+                <span id="user-nickname">欢迎━(*｀∀´*)ノ亻!</span> |
+                <span id="user-level">可可爱爱！</span> |
+                <button onclick="logout()">退出系统</button>
+            </div>
+        </header>
+    </div>
+
+    <main>
+        <div class="container">
+            <div class="course-import course-admin">
+                <h3>课程导入</h3>
+                <button onclick="openJiaowuImportModal()">从教务导入</button>
+                <button onclick="openLocalImportModal()">本地导入</button>
+            </div>
+
+            <!-- 添加课程按钮 -->
+            <div class="course-form course-admin" style="text-align: center; margin-bottom: 20px;">
+                <h3>课程添加</h3>
+                <button onclick="openAddCourseModal()">添加课程</button>
+                <button onclick="deleteSelectedCourses()">删除选中</button>
+            </div>
+
+            <!--课程内容展示-->
+            <div class="course-list-container">
+                <div id="course-list" class="course-list"></div>
+            </div>
+
+            <!--分页按钮-->
+            <div id="course-pagination" class="pagination"></div>
+
+            <!-- 添加课程弹窗 -->
+            <div id="add-course-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeAddCourseModal()">&times;</span>
+                    <h3>添加课程</h3>
+                    <input type="text" id="modal-course-name" placeholder="课程名称">
+                    <input type="text" id="modal-course-teacher" placeholder="任课教师">
+                    <input type="text" id="modal-course-location" placeholder="上课地点">
+                    <input type="text" id="modal-course-time" placeholder="上课时间">
+                    <button onclick="addCourse()">确认添加</button>
+                </div>
+            </div>
+
+            <!-- 教务导入弹窗 -->
+            <div id="jiaowu-import-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeJiaowuImportModal()">&times;</span>
+                    <h3>从教务系统导入</h3>
+                    <input type="text" id="jiaowu-url" placeholder="请输入教务网址"><br>
+                    <button onclick="importFromJiaowu()">导入课程</button>
+                </div>
+            </div>
+
+            <!-- 本地导入弹窗 -->
+            <div id="local-import-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeLocalImportModal()">&times;</span>
+                    <h3>从本地导入</h3>
+                    <input type="file" id="local-file" accept=".xlsx"><br>
+                    <button onclick="importFromLocal()">导入课程</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="js/course.js"></script>
+</body>
+</html>
