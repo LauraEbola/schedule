@@ -1,78 +1,130 @@
-const emailLoginFormContainer = document.getElementById("emailLoginFormContainer");
-const emailLoginBtn = document.getElementById("emailLogin");
-const emailBackToLogin = document.getElementById("emailBackToLogin");
+document.addEventListener("DOMContentLoaded", function () {
+    const emailLoginFormContainer = document.getElementById("emailLoginFormContainer");
+    const emailLoginBtn = document.getElementById("emailLogin");
+    const emailBackToLogin = document.getElementById("emailBackToLogin");
+    const emailLoginForm = document.getElementById("emailLoginForm");
+    const sendCodeBtn = document.getElementById("sendCodeBtn");
 
-// 邮箱验证码用变量（仅前端演示）
-let generatedCode = null;
-let emailCodeTarget = "";
+    // 切换到邮箱登录页面
+    emailLoginBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        loginFormContainer.style.display = "none";
+        registerFormContainer.style.display = "none";
+        emailLoginFormContainer.style.display = "block";
+    });
 
-// 切换到邮箱登录页面
-emailLoginBtn.addEventListener("click", function () {
-    loginFormContainer.style.display = "none";
-    registerFormContainer.style.display = "none";
-    emailLoginFormContainer.style.display = "block";
-});
+    // 返回登录页
+    emailBackToLogin.addEventListener("click", function (e) {
+        e.preventDefault();
+        emailLoginFormContainer.style.display = "none";
+        loginFormContainer.style.display = "block";
+    });
 
-// 返回登录页
-emailBackToLogin.addEventListener("click", function () {
-    emailLoginFormContainer.style.display = "none";
-    loginFormContainer.style.display = "block";
-});
+    // 发送验证码按钮
+    sendCodeBtn.addEventListener("click", async function () {
+        const email = document.getElementById("emailAddress").value.trim();
 
-// 发送验证码按钮
-document.getElementById("sendCodeBtn").addEventListener("click", function () {
-    const email = document.getElementById("emailAddress").value.trim();
-    if (!email || !email.includes("@")) {
-        alert("请输入有效的邮箱地址！");
-        return;
-    }
-
-    // 模拟生成验证码
-    generatedCode = String(Math.floor(10000 + Math.random() * 90000));
-    emailCodeTarget = email;
-
-    // 使用 EmailJS 发送验证码邮件
-    const templateParams = {
-        to_email: email,  // 收件人邮箱地址
-        subject: "验证码登录",  // 邮件主题
-        message: `您的验证码是：${generatedCode}`  // 邮件内容
-    };
-
-    // 发送邮件
-    emailjs.send("service_yourServiceID", "template_yourTemplateID", templateParams)
-        .then(function (response) {
-            alert(`验证码已发送至：${email}（模拟验证码为：${generatedCode}）`);
-        }, function (error) {
-            alert("验证码发送失败，请稍后再试。");
-        });
-});
-
-// 邮箱验证码登录提交
-document.getElementById("emailLoginForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const email = document.getElementById("emailAddress").value.trim();
-    const codeInput = document.getElementById("emailCode").value.trim();
-
-    if (email !== emailCodeTarget || codeInput !== generatedCode) {
-        alert("验证码错误或邮箱不匹配！");
-        return;
-    }
-
-    // 查找是否绑定了该邮箱的用户
-    let userFound = null;
-    for (const [username, info] of Object.entries(userDatabase)) {
-        if (info.email === email) {
-            userFound = username;
-            break;
+        if (!email || !email.includes("@")) {
+            alert("请输入有效的邮箱地址！");
+            return;
         }
-    }
 
-    if (userFound) {
-        alert(`欢迎回来，${userFound}！`);
-    } else {
-        alert("登录成功！（该邮箱未绑定账号，将以临时用户登录）");
-    }
+        // 禁用按钮防止重复点击
+        sendCodeBtn.disabled = true;
+        sendCodeBtn.textContent = "发送中...";
 
-    window.location.href = "HomePage.html";
+        try {
+            const response = await fetch("http://localhost:5000/api/Auth/SendVerificationCode", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert(data.message);
+                // 开始60秒倒计时
+                startCountdown(60);
+            } else {
+                alert(data.message || "发送验证码失败");
+                sendCodeBtn.disabled = false;
+                sendCodeBtn.textContent = "发送验证码";
+            }
+        } catch (error) {
+            console.error("发送验证码错误:", error);
+            alert("发送验证码过程中发生错误");
+            sendCodeBtn.disabled = false;
+            sendCodeBtn.textContent = "发送验证码";
+        }
+    });
+
+    // 邮箱验证码登录提交
+    emailLoginForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const email = document.getElementById("emailAddress").value.trim();
+        const code = document.getElementById("emailCode").value.trim();
+
+        if (!email || !code) {
+            alert("请输入邮箱和验证码");
+            return;
+        }
+
+        try {
+            const response = await fetch("http://localhost:5000/api/Auth/LoginWithEmail", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, code })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || '邮箱登录失败');
+            }
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // 保存登录状态和用户信息
+                sessionStorage.setItem('isLoggedIn', 'true');
+                sessionStorage.setItem('user', JSON.stringify({
+                    userId: data.user.userId,
+                    username: data.user.username,
+                    nickname: data.user.nickname,
+                    email: data.user.email,
+                    isAdmin: data.user.isAdmin
+                }));
+                sessionStorage.setItem('token', data.token);
+                alert(data.message);
+                window.location.href = "HomePage.html";
+            } else {
+                alert(data.message || "登录失败");
+            }
+        } catch (error) {
+            console.error("邮箱登录错误:", error);
+            alert("登录过程中发生错误");
+        }
+    });
+
+    // 倒计时函数
+    function startCountdown(seconds) {
+        let remaining = seconds;
+        sendCodeBtn.textContent = `${remaining}秒后重试`;
+
+        const timer = setInterval(() => {
+            remaining--;
+            sendCodeBtn.textContent = `${remaining}秒后重试`;
+
+            if (remaining <= 0) {
+                clearInterval(timer);
+                sendCodeBtn.disabled = false;
+                sendCodeBtn.textContent = "发送验证码";
+            }
+        }, 1000);
+    }
 });

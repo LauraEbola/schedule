@@ -1,60 +1,90 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // 默认管理员账户
-    const defaultAdminAccount = {
-        username: "admin",
-        password: "admin"
-    };
-
-    // 简单注册信息存储（仅用于前端演示）
-    const userDatabase = {};
-
     const loginFormContainer = document.getElementById("loginFormContainer");
     const registerFormContainer = document.getElementById("registerFormContainer");
+    const emailLoginFormContainer = document.getElementById("emailLoginFormContainer");
     const showRegister = document.getElementById("showRegister");
     const showLogin = document.getElementById("showLogin");
+    const emailLogin = document.getElementById("emailLogin");
+    const emailBackToLogin = document.getElementById("emailBackToLogin");
+    const guestAccess = document.getElementById("guestAccess");
 
-    // 切换到注册页面
-    showRegister.addEventListener("click", function () {
+    // 表单切换
+    showRegister.addEventListener("click", function (e) {
+        e.preventDefault();
         loginFormContainer.style.display = "none";
         registerFormContainer.style.display = "block";
     });
 
-    // 切换到登录页面
-    showLogin.addEventListener("click", function () {
+    showLogin.addEventListener("click", function (e) {
+        e.preventDefault();
         registerFormContainer.style.display = "none";
+        loginFormContainer.style.display = "block";
+    });
+
+    emailLogin.addEventListener("click", function (e) {
+        e.preventDefault();
+        loginFormContainer.style.display = "none";
+        emailLoginFormContainer.style.display = "block";
+    });
+
+    emailBackToLogin.addEventListener("click", function (e) {
+        e.preventDefault();
+        emailLoginFormContainer.style.display = "none";
         loginFormContainer.style.display = "block";
     });
 
     // 登录功能
     const loginForm = document.getElementById("loginForm");
-    loginForm.addEventListener("submit", function (e) {
+    loginForm.addEventListener("submit", async function (e) {
         e.preventDefault();
 
         const username = document.getElementById("loginUsername").value;
         const password = document.getElementById("loginPassword").value;
 
-        if (username === defaultAdminAccount.username) {
-            if (password === defaultAdminAccount.password) {
-                alert("管理员登录成功！");
+        try {
+            const response = await fetch("http://localhost:5000/api/Auth/Login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, password }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || '登录失败');
+            }
+
+            const data = await response.json();
+
+            if (response.ok) {
+
+                // 登录成功
+                // 保存登录状态和用户信息
+                sessionStorage.setItem('isLoggedIn', 'true');
+                sessionStorage.setItem('user', JSON.stringify({
+                    userId: data.user.userId,
+                    username: data.user.username,
+                    nickname: data.user.nickname,
+                    email: data.user.email,
+                    isAdmin: data.user.isAdmin
+                }));
+                sessionStorage.setItem('token', data.token);
+
+                alert(data.message);
                 window.location.href = "HomePage.html";
             } else {
-                alert("密码错误！");
+                alert(data.message);
             }
-        } else if (userDatabase[username]) {
-            if (userDatabase[username].password === password) {
-                alert("登录成功！");
-                window.location.href = "HomePage.html";
-            } else {
-                alert("密码错误！");
-            }
-        } else {
-            alert("账号不存在！");
+        } catch (error) {
+            console.error("登录错误:", error);
+            alert("登录过程中发生错误");
         }
     });
 
     // 注册功能
     const registerForm = document.getElementById("registerForm");
-    registerForm.addEventListener("submit", function (e) {
+    registerForm.addEventListener("submit", async function (e) {
         e.preventDefault();
 
         const username = document.getElementById("regiName").value;
@@ -62,27 +92,55 @@ document.addEventListener("DOMContentLoaded", function () {
         const nickname = document.getElementById("regiNick").value;
         const email = document.getElementById("regiEmail").value;
 
-        if (userDatabase[username]) {
-            alert("该用户名已存在！");
-            return;
+        try {
+            const response = await fetch("http://localhost:5000/api/Auth/Register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, password, nickname, email }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert(data.message);
+                registerFormContainer.style.display = "none";
+                loginFormContainer.style.display = "block";
+                registerForm.reset();
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+            console.error("注册错误:", error);
+            alert("注册过程中发生错误");
         }
-
-        userDatabase[username] = {
-            password,
-            nickname,
-            email: email || null
-        };
-
-        alert("注册成功，请使用您的账号登录！");
-        registerFormContainer.style.display = "none";
-        loginFormContainer.style.display = "block";
     });
 
     // 游客访问
-    const guestAccess = document.getElementById("guestAccess");
-    guestAccess.addEventListener("click", function () {
-        alert("以游客身份访问");
-        window.location.href = "HomePage.html";
+    guestAccess.addEventListener("click", async function (e) {
+        e.preventDefault();
+
+        try {
+            const response = await fetch("http://localhost:5000/api/Auth/Guest", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert(data.message);
+                window.location.href = "HomePage.html";
+            } else {
+                alert("游客访问失败");
+            }
+        } catch (error) {
+            console.error("游客访问错误:", error);
+            alert("游客访问过程中发生错误");
+        }
     });
 
 });
